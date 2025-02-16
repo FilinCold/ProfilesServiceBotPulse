@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const { ENV } = require("../env");
 
 class DataBase {
   constructor() {
@@ -7,12 +8,9 @@ class DataBase {
 
   async connect() {
     try {
-      await mongoose.connect(
-        "mongodb+srv://strikesswery:strikesswery@cluster0.sprgr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-        {
-          serverSelectionTimeoutMS: 3000,
-        }
-      );
+      await mongoose.connect(ENV.MONGO_URI, {
+        serverSelectionTimeoutMS: 3000,
+      });
 
       console.log("Database connected");
     } catch (error) {
@@ -27,6 +25,8 @@ class DataBase {
 
         return;
       }
+
+      console.log("Database is not connect");
     }
   }
 }
